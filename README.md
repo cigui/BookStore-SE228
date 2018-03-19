@@ -1,1 +1,2 @@
-BookStore - SE228
+# BookStore
+- Web开发技术课程项目

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Struts2 DTD -->
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	<constant name="struts.devMode" value="true" />
+	<package name="process" extends="json-default">
+		<default-action-ref name="index"></default-action-ref>
+		
+		<!-- index & book browsing -->
+		<action name="index" class="action.IndexAction">
+			<result name="success">/WEB-INF/view/BookStore.jsp</result>
+		</action>
+		<action name="bookInfo" class="action.BookInfoAction">
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		<action name="getCover" class="action.GetCoverAction">
+			<result type="stream">
+				<param name="contentType">fileContentType</param>
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+		
+		<!-- Dispatcher Action -->
+		<action name="go*" class="action.DispatcherAction" method="{1}">
+			<result name="register">/WEB-INF/view/register/register.jsp</result>
+			<result name="crudUser">/WEB-INF/view/crud/user.jsp</result>
+			<result name="crudBook">/WEB-INF/view/crud/book.jsp</result>
+			<result name="crudOrder">/WEB-INF/view/crud/order.jsp</result>
+			<result name="crudOrderitem">/WEB-INF/view/crud/orderitem.jsp</result>
+		</action>
+
+		<!-- User Actions -->
+		<action name="loginAction" class="action.userActions.LoginAction">
+			<result name="success" type="redirect">/index</result>
+			<result name="error" type="redirect">/error.jsp</result>
+		</action>
+		<action name="logoutAction" class="action.userActions.LogoutAction">
+			<result name="success" type="redirect">index</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="registerAction" class="action.userActions.RegisterAction">
+			<result name="success">/WEB-INF/view/register/welcome.jsp</result>
+			<result name="error" type="redirect">/error.jsp</result>
+		</action>
+		<action name="profile" class="action.userActions.ProfileAction">
+			<result name="success">/WEB-INF/view/profile.jsp</result>
+			<result name="error" type="redirect">/error.jsp</result>
+		</action>
+		<action name="editProfile" class="action.userActions.EditProfileAction">
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		<action name="placeOrder" class="action.userActions.PlaceOrderAction">
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		<action name="listOrders" class="action.userActions.ListOrdersAction">
+			<result name="success">/WEB-INF/view/userOrders.jsp</result>
+		</action>
+		
+		<!-- Book Searching -->
+		<action name="search" class="action.SearchBookAction">
+			<result name="success">/WEB-INF/view/searchresults.jsp</result>
+		</action>
+		
+		<!-- Shopping Cart Actions -->
+		<action name="addIntoShoppingCart" class="action.shoppingCartActions.AddIntoShoppingCartAction">
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		<action name="viewShoppingCart" class="action.shoppingCartActions.ListShoppingCartAction">
+			<result name="success">/WEB-INF/view/userCart.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="deleteFromShoppingCart" class="action.shoppingCartActions.DeleteFromShoppingCartAction">
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		<action name="changeItemNumber" class="action.shoppingCartActions.ChangeItemNumberAction">
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		<action name="purchase" class="action.shoppingCartActions.PurchaseAction">
+			<result name="success" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		
+		<!-- Sales Statistics Actoins -->
+		<action name="statistics" class="action.statisticsActions.StatisticsInfoAction">
+			<result name="success">/WEB-INF/view/crud/statistics.jsp</result>
+		</action>
+		<action name="statisticsByUsers" class="action.statisticsActions.StatisticsByUsersAction">
+			<result name="success">/WEB-INF/view/crud/statisticsresults.jsp</result>
+		</action>
+		<action name="statisticsByDates" class="action.statisticsActions.StatisticsByDatesAction">
+			<result name="success">/WEB-INF/view/crud/statisticsresults.jsp</result>
+		</action>
+		<action name="statisticsByCategories" class="action.statisticsActions.StatisticsByCategoriesAction">
+			<result name="success">/WEB-INF/view/crud/statisticsresults.jsp</result>
+		</action>
+		<!-- <action name="*"> <result>/{1}.jsp</result> </action> -->
+
+	</package>
+	<package name="crud" extends="json-default">
+		
+		<!-- Book -->
+		<action name="book*" class="action.crud.CrudForBook" method="{1}">
+			<result name="all" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="update" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="isbnList" type="json">
+				<param name="root">resultList</param>
+				<param name="includeProperties">*</param>
+			</result>
+			<result name="upload" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+
+		<!-- CRUD For Order item -->
+		<action name="item*" class="action.crud.CrudForOrderitem" method="{1}">
+			<result name="all" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="update" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+		
+		<!-- CRUD For Order -->
+		<action name="order*" class="action.crud.CrudForOrder" method="{1}">
+			<result name="all" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="update" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="idList" type="json">
+				<param name="root">resultList</param>
+				<param name="includeProperties">*</param>
+			</result>
+		</action>
+
+		<!-- CRUD For User -->
+		<action name="user*" class="action.crud.CrudForUser" method="{1}">
+			<result name="all" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="add" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="update" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">resultMap</param>
+			</result>
+			<result name="idList" type="json">
+				<param name="root">resultList</param>
+				<param name="includeProperties">*</param>
+			</result>
+		</action>
+		
+	</package>
+</struts>

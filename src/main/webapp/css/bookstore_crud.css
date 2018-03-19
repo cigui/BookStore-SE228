@@ -1,0 +1,49 @@
+html {
+	height: 100%;
+}
+
+.container {
+	height: 100%;
+	overflow: hidden;
+}
+
+.my_link {
+	color: navajowhite;
+	background-color: #55c3dc;
+	margin: 0; padding : 0;
+	height: 100%;
+	float: left;
+	padding: 0;
+	overflow: hidden;
+}
+
+.links {
+	list-style-type:none;
+	margin: 0; padding: 3px;
+}
+
+.my_block {
+	height: 100%;
+	padding-left: 20px; 	
+	position: absolute;
+	left: 300px;
+}
+
+body {
+	height: 100%;
+	font-family: verdana, helvetica, arial, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	background-color: #22313f;
+}
+
+h2 {
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0;
+}
+
+p,label {
+	color: ghostwhite;
+}
